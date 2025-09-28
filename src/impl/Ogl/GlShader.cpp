@@ -1,6 +1,8 @@
 #include "GLShader.h"
 #include "Utils.h"
 #include "core/Globals.h"
+#include "glm/fwd.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 GLShader::GLShader(const char *vertexPath, const char *fragmentPath) : m_vertexPath(vertexPath), m_fragmentPath(fragmentPath){
     logger.Log(INFO, "Loading Vertex Shader from ", vertexPath);
@@ -145,4 +147,8 @@ void GLShader::SetUniform4i(const GLchar *name, Vec4<int> vec) {
 void GLShader::SetUniformMat4(const GLchar *name, Matrix4<float> mat) {
     GLint location = GetUniformLoc(name);
     glUniformMatrix4fv(location, 1, GL_FALSE, mat.data);
+}
+void GLShader::SetUniformMat4(const GLchar *name, glm::mat4 mat) {
+    GLint location = GetUniformLoc(name);
+    glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(mat));
 }

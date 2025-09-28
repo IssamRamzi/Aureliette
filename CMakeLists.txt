@@ -35,6 +35,12 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES}
 		src/Engine/core/Window.cpp
 		src/Engine/core/InputManager.cpp
 		src/Engine/core/InputManager.h
+		src/Engine/geometry/Triangle.h
+		src/Engine/geometry/Mesh.cpp
+		src/Engine/geometry/Mesh.h
+		src/Engine/core/Camera.cpp
+		src/Engine/core/Camera.h
+		src/programs/DoubleTriangle.cpp
 )
 
 
@@ -51,11 +57,14 @@ endif ()
 # Variables for Paths of External Libraries
 set(GLFW_ROOT_DIR external/glfw)
 set(GLAD_ROOT_DIR external/glad)
+set(GLM_ROOT_DIR external/glm-1.0.1)
+
 
 
 # Add the External Libraries / Files Directory
 add_subdirectory(${GLFW_ROOT_DIR})
 add_subdirectory(${GLAD_ROOT_DIR})
+add_subdirectory(${GLM_ROOT_DIR})
 
 # Add the Include Directories for the Libraries / Files
 #Used for adding #include into the cpp files
@@ -65,6 +74,7 @@ add_subdirectory(${GLAD_ROOT_DIR})
 target_include_directories(${PROJECT_NAME} 
 	PUBLIC ${GLFW_ROOT_DIR}/include
 	PUBLIC ${GLAD_ROOT_DIR}/include/glad
+		PUBLIC ${GLM_ROOT_DIR}/
 	src/Engine
 	src/
 		src/impl

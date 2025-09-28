@@ -4,6 +4,8 @@
 
 
 #include <glad/glad.h>
+
+#include "glm/glm.hpp"
 #include "math/kMath.h"
 
 
@@ -57,6 +59,7 @@ public:
     void        SetUniform4i(const GLchar* name, Vec4<int> vec);
 
     void        SetUniformMat4(const GLchar *name, Matrix4<float> mat);
+    void        SetUniformMat4(const GLchar *name, glm::mat4 mat);
 };
 
 #endif //SHADER_H
