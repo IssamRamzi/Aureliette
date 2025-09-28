@@ -1,12 +1,15 @@
 #include "GLShader.h"
 #include "Utils.h"
+#include "core/Globals.h"
 
 GLShader::GLShader(const char *vertexPath, const char *fragmentPath) : m_vertexPath(vertexPath), m_fragmentPath(fragmentPath){
+    logger.Log(INFO, "Loading Vertex Shader from ", vertexPath);
     std::string vertex = GetTextFromFile(vertexPath);
+    logger.Log(INFO, "Loading Fragment Shader from ", fragmentPath);
     std::string fragment = GetTextFromFile(fragmentPath);
 
     if (vertex.empty() || fragment.empty()) {
-        std::cout << "Couldn't find the shaders" << std::endl;
+        logger.Log(INFO, "Failed loading the shaders.");
         return;
     }
 
@@ -18,7 +21,7 @@ GLShader::GLShader(const char *vertexPath, const char *fragmentPath) : m_vertexP
     fragment_p = glCreateShader(GL_FRAGMENT_SHADER);
 
     if (vertex_p == 0 || fragment_p == 0) {
-        std::cout << "Failed to create the shader." << std::endl;
+        logger.Log(WARNING, "Failed creating the shaders.");
         return;
     }
 
@@ -34,7 +37,7 @@ GLShader::GLShader(const char *vertexPath, const char *fragmentPath) : m_vertexP
         if (length > 0) {
             char* infoLog = new char[length];
             glGetShaderInfoLog(vertex_p, length, &length, infoLog);
-            std::cout << "VERTEX SHADER COMPILATION ERROR: " << infoLog << std::endl;
+            logger.Log(WARNING, "VERTEX SHADER COMPILATION ERROR:", infoLog);
             delete[] infoLog;
         }
         glDeleteShader(vertex_p);
@@ -51,7 +54,7 @@ GLShader::GLShader(const char *vertexPath, const char *fragmentPath) : m_vertexP
         if (length > 0) {
             char* infoLog = new char[length];
             glGetShaderInfoLog(fragment_p, length, &length, infoLog);
-            std::cout << "FRAGMENT SHADER COMPILATION ERROR: " << infoLog << std::endl;
+            logger.Log(WARNING, "FRAGMENT SHADER COMPILATION ERROR:", infoLog);
             delete[] infoLog;
         }
         glDeleteShader(vertex_p);
@@ -61,7 +64,7 @@ GLShader::GLShader(const char *vertexPath, const char *fragmentPath) : m_vertexP
 
     GLuint program = glCreateProgram();
     if (program == 0) {
-        std::cout << "Failed to create shader program" << std::endl;
+        logger.Log(WARNING, "Failed to create shader program");
         glDeleteShader(vertex_p);
         glDeleteShader(fragment_p);
         return;
@@ -76,6 +79,7 @@ GLShader::GLShader(const char *vertexPath, const char *fragmentPath) : m_vertexP
 
     glValidateProgram(program);
     m_shaderProgram = program;
+    logger.Log(DEBUG, "Shader created successfully.");
 }
 
 GLShader::~GLShader() {

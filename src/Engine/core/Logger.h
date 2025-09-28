@@ -40,8 +40,11 @@ public:
         sstream << std::endl;
 
         std::cout << sstream.str();
-        if (file.is_open())
+        if (file.is_open()) {
             file << sstream.str();
+            // file.flush();
+        }
+
     }
 };
 

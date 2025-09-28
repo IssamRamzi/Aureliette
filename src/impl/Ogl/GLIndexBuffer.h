@@ -4,6 +4,8 @@
 
 #ifndef GLINDEXBUFFER_H
 #define GLINDEXBUFFER_H
+#include <vector>
+
 #include "glad.h"
 #include "core/Globals.h"
 
@@ -18,7 +20,7 @@ private:
 public:
 
     GLIndexBuffer(GLuint* data, i32 size, bool dynamic = false);
-    GLIndexBuffer(GLBuffer buffer, i32 size, bool dynamic = false);
+    GLIndexBuffer(std::vector<GLuint>, bool dynamic = false);
 
     ~GLIndexBuffer();
 

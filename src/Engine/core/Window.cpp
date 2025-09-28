@@ -1,5 +1,6 @@
 #include "Window.h"
-#include "../core/Logger.h"
+#include "Logger.h"
+#include "core/Globals.h"
 
 Window::Window(int width, int height, std::string title) : m_width(width), m_height(height), m_title(title){
     Init();
@@ -20,10 +21,10 @@ void resize_callback(GLFWwindow* window, int width, int height){
 
 void Window::Init(){
 	if(!glfwInit()){
-		// Logger::Log(WARNING, "Failed to initialize GLFW\n");
+		logger.Log(WARNING, "Failed to initialize GLFW");
 		exit(EXIT_FAILURE);
 	}
-	// Logger::Log(INFO, "GLFW Initialization succeeded !\n");
+	logger.Log(INFO, "GLFW Initialization succeeded !");
 
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -37,15 +38,13 @@ void Window::Init(){
 		glfwTerminate();
         return;
 	}
-
     glfwMakeContextCurrent(m_window);
     glfwSetFramebufferSizeCallback(m_window, resize_callback);
     glfwSetWindowUserPointer(m_window, this);
 
 	if (!gladLoadGL()) {
-		// Logger::Log(WARNING, "Failed to initialize GLAD\n");
+		logger.Log(WARNING, "Failed to initialize GLAD");
 		exit(EXIT_FAILURE);
 	}
-
-	// Logger::Log(WARNING, "Window Initialization succeeded\n");
+	logger.Log(DEBUG, "Window Creation succeeded !");
 }

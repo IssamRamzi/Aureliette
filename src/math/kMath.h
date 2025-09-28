@@ -6,11 +6,9 @@
 
 #define PI 3.141592653589793
 
-struct MathUtils {
     static float deg_to_radians(float deg){
         return deg * PI * 1 / 180;
     }
-};
 
 
 
@@ -589,17 +587,17 @@ template<typename T>
 struct Matrix4 {
     T data[4 * 4];
 
-    Matrix4(T diagonale) {
+    Matrix4(T diagonals) {
         for (int i = 0; i < 16; i++) {
             data[i] = 0;
         }
-        data[0] = diagonale;
-        data[5] = diagonale;
-        data[10] = diagonale;
-        data[15] = diagonale;
+        data[0] = diagonals;
+        data[5] = diagonals;
+        data[10] = diagonals;
+        data[15] = diagonals;
     }
 
-    Matrix4 operator*(Matrix4& another) {
+    Matrix4 operator*(Matrix4 another) {
         Matrix4<T> res(0);
         for (uint8_t i = 0; i < 4; i++) {
             for (uint8_t j = 0; j < 4; j++) {
@@ -644,10 +642,10 @@ struct Matrix4 {
         if (row >= 4) return Vec4<T>(0, 0, 0, 0);
 
         return Vec4<T>(
-            data[0 * 4 + row],
-            data[1 * 4 + row],
-            data[2 * 4 + row],
-            data[3 * 4 + row]
+            data[row * 4 + 0],
+            data[row * 4 + 1],
+            data[row * 4 + 2],
+            data[row * 4 + 3]
         );
     }
 
@@ -668,7 +666,7 @@ struct Matrix4 {
 
     static Matrix4 perspective(float fov, float aspectRatio, float near, float far) {
         Matrix4 res(1.0);
-        float q = 1.0 / tan(MathUtils::deg_to_radians(fov) / 2.0f);
+        float q = 1.0 / tan(deg_to_radians(fov) / 2.0f);
         float a = q / aspectRatio;
 
         float b = (near + far) / (near - far);
@@ -678,7 +676,7 @@ struct Matrix4 {
         res.data[1 + 1 * 4] = q;
         res.data[2 + 2 * 4] = b;
         res.data[3 + 2 * 4] = -1;
-        res.data[2 + 3 * 4] = -1;
+        res.data[2 + 3 * 4] = c;
 
         return res;
     }
@@ -701,7 +699,7 @@ struct Matrix4 {
 
     static Matrix4 rotation(float angle, Vec3<T> axes) { // (1, 0, 0) for X, (0, 0, 1) for z etc
         Matrix4 res(1);
-        float r = MathUtils::deg_to_radians(angle);
+        float r = deg_to_radians(angle);
         float s = sin(r);
         float c = cos(r);
 

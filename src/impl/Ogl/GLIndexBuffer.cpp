@@ -12,7 +12,12 @@ GLIndexBuffer::GLIndexBuffer(GLuint *data, i32 count, bool dynamic) : m_count(co
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,count * sizeof(GLuint), data, dynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
 }
 
-GLIndexBuffer::GLIndexBuffer(GLBuffer buffer, i32 size, bool dynamic) {
+GLIndexBuffer::GLIndexBuffer(std::vector<GLuint> data, bool dynamic) : m_count(data.size()){
+    if (data.empty()) return;
+    glGenBuffers(1, &m_bufferID);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_bufferID);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER,m_count * sizeof(GLuint), data.data(), dynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
+
 }
 
 GLIndexBuffer::~GLIndexBuffer() {

@@ -6,15 +6,8 @@
 #include "Utils.h"
 
 int main() {
-	// std::string rs = GetTextFromFile("..\\shaders\\main.cpp");
-	// std::cout << rs;
-
-
-	Application application{"Game Engine", 1280, 720};
+	Application application{};
 	application.Run();
 
-	
-	
-	
 	return 0;
 }

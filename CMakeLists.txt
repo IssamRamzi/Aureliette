@@ -4,7 +4,7 @@
 
 cmake_minimum_required(VERSION 3.20.0 FATAL_ERROR)
 
-project(OpenGLStarter)
+project(GameEngine)
 
 # Add all Source Files
 file(GLOB_RECURSE SOURCE_FILES 
@@ -31,7 +31,11 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES}
 		src/Engine/core/Globals.h
 		src/impl/Ogl/GLIndexBuffer.cpp
 		src/impl/Ogl/GLIndexBuffer.h
-		src/impl/iBuffer.h)
+		src/impl/iBuffer.h
+		src/Engine/core/Window.cpp
+		src/Engine/core/InputManager.cpp
+		src/Engine/core/InputManager.h
+)
 
 
 # Find the Required Packages (if Any -> OpenGL/Vulkan or Any)
