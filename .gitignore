@@ -51,8 +51,9 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 
-external
-objects
+external/
+objects/
+objects/backpack
 
 # Exclude Out Folder - As Everything there is compiled using CMake
 
