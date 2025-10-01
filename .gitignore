@@ -51,6 +51,9 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 
+external
+objects
+
 # Exclude Out Folder - As Everything there is compiled using CMake
 
 [Oo][Uu][Tt]
