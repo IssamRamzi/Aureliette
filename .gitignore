@@ -56,5 +56,4 @@ objects/
 objects/backpack
 
 # Exclude Out Folder - As Everything there is compiled using CMake
-
 [Oo][Uu][Tt]
