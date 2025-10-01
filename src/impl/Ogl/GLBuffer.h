@@ -5,7 +5,7 @@
 #ifndef GLBUFFER_H
 #define GLBUFFER_H
 #include "glad.h"
-#include "Vertex.h"
+#include "../../Engine/geometry/Vertex.h"
 #include "core/Globals.h"
 
 

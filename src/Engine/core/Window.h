@@ -13,6 +13,7 @@ private:
     bool m_windowShouldClose;
     int m_width, m_height;
     std::string m_title;
+    std::string m_iconPath;
 
 private:
     void Init();
@@ -21,7 +22,7 @@ private:
     
     
 public:
-    Window(int width, int height, std::string title);
+    Window(int width, int height, std::string title, std::string iconpath = "");
     ~Window();
 
 

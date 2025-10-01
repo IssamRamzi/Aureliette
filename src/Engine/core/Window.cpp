@@ -1,8 +1,9 @@
 #include "Window.h"
 #include "Logger.h"
 #include "core/Globals.h"
+#include "stb_image/stb_image.h"
 
-Window::Window(int width, int height, std::string title) : m_width(width), m_height(height), m_title(title){
+Window::Window(int width, int height, std::string title, std::string iconpath) : m_width(width), m_height(height), m_title(title), m_iconPath(iconpath){
     Init();
 }
 
@@ -38,6 +39,14 @@ void Window::Init(){
 		glfwTerminate();
         return;
 	}
+
+	if (m_iconPath != "") {
+		GLFWimage images[1];
+		images[0].pixels = stbi_load(m_iconPath.c_str(), &images[0].width, &images[0].height, 0, 4); //rgba channels
+		glfwSetWindowIcon(m_window, 1, images);
+		stbi_image_free(images[0].pixels);
+	}
+
     glfwMakeContextCurrent(m_window);
     glfwSetFramebufferSizeCallback(m_window, resize_callback);
     glfwSetWindowUserPointer(m_window, this);

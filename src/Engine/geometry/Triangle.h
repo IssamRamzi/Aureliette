@@ -1,7 +1,7 @@
 //
 // Created by issbe on 28/09/2025.
 //
-
+#pragma once
 #ifndef TRIANGLE_H
 #define TRIANGLE_H
 #include <vector>
@@ -14,24 +14,14 @@
 #include "Ogl/GLVertexArrayBuffer.h"
 
 
-std::vector<Vertex> vertices = {
-    Vertex{{0.0f,  0.5f, 0.0f}, {1.0f, 0.0f, 0.5f}},
-    Vertex{{-0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 1.0f}},
-    Vertex{{0.5f, -0.5f, 0.0f}, {0.0f, 0.3f, 1.0f}}
-};
 
-std::vector<GLuint> indices = {0,1,2};
 
 class Triangle {
 private:
-
     vec3_f m_position;
     Mesh* m_mesh;
-
-
-
 public:
-    Triangle(vec3_f pos, Mesh *mesh = new Mesh{vertices, indices}) : m_position(pos), m_mesh(mesh) {}
+    Triangle(vec3_f pos, Mesh *mesh) : m_position(pos), m_mesh(mesh) {}
 
     ~Triangle() {
     }

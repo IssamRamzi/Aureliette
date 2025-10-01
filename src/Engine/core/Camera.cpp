@@ -23,11 +23,30 @@ mat4 Camera::CalculateMatrix(float nearPlane, float farPlane){
 }
 
 void Camera::ProcessKeyboardInputs(){
+    if (InputManager::IsKeyPressed(SHIFT)) {
+        m_speed = 0.5;
+    }
+    else {
+        m_speed = 0.1;
+    }
     if(InputManager::IsKeyPressed(UP)){
         m_position += m_speed * m_orientation;
     }
     if(InputManager::IsKeyPressed(DOWN)){
         m_position += m_speed * -m_orientation;
+    }
+    if(InputManager::IsKeyPressed(LEFT)){
+        m_position += m_speed * -m_right;
+    }
+    if(InputManager::IsKeyPressed(RIGHT)){
+        m_position += m_speed * m_right;
+    }
+    // UP and Down
+    if (InputManager::IsKeyPressed(Z)) {
+        m_position += m_speed * m_up;
+    }
+    if (InputManager::IsKeyPressed(S)) {
+        m_position += m_speed * -m_up;
     }
 }
 

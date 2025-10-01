@@ -23,6 +23,7 @@ private:
     vec3            m_position;
     vec3            m_orientation = vec3(0.0f, 0.0f, -1.0f);
     vec3            m_up = vec3(0.0f, 1.0f, 0.0f);
+    vec3            m_right = vec3(1.0f, 0.0f, 0.0f);
 
-    float           m_speed = 0.01f, m_sensitivity, m_fov = 45;
+    float           m_speed = 0.1f, m_sensitivity, m_fov = 45;
 };

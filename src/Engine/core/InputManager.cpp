@@ -14,14 +14,14 @@ std::map<int, Key> InputManager::keyMap = {
     {GLFW_KEY_ESCAPE, ESCAPE},
     {GLFW_KEY_LEFT_CONTROL, CTRL},
     {GLFW_KEY_LEFT_SHIFT, SHIFT},
-    {GLFW_KEY_Z, Z},
-    {GLFW_KEY_Q, Q},
+    {GLFW_KEY_W, Z},
+    {GLFW_KEY_A, Q},
     {GLFW_KEY_S, S},
     {GLFW_KEY_D, D},
 };
 
 std::vector<bool> InputManager::keysPressed(KeysCount, false);
-GLFWwindow* InputManager::m_window = nullptr;  // Note the * here
+GLFWwindow* InputManager::m_window = nullptr;
 
 void InputManager::Init(GLFWwindow* _window) {
     m_window = _window;
