@@ -15,6 +15,7 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indecies, std::vect
     EBO = new GLIndexBuffer(indecies);
     VAO->AddBuffer(*VBO, 0, 3, sizeof(Vertex), (void*)0);                   // pos
     VAO->AddBuffer(*VBO, 1, 3, sizeof(Vertex), (void*)(3 * sizeof(float))); // col
+    VAO->AddBuffer(*VBO, 2, 2, sizeof(Vertex), (void*)(6 * sizeof(float))); // texcoords
 }
 
 Mesh::~Mesh() {
@@ -28,9 +29,8 @@ void Mesh::Draw() {
     VAO->Bind();
     EBO->Bind();
 
-    GLuint unit = 0;
     for (auto& texture : m_textures) {
-        texture.Bind(unit++);
+        texture.Bind(0);
     }
 
     glDrawElements(GL_TRIANGLES, EBO->GetCount(), GL_UNSIGNED_INT, 0);

@@ -19,11 +19,7 @@ private:
     std::vector<Mesh> m_meshes;
     std::string directory;
 
-    void LoadModel(std::string path);
-    void ProcessNode(aiNode* node, const aiScene* scene);
-    Mesh ProcessMesh(aiMesh* mesh, const aiScene* scene);
-    std::vector<Texture> LoadTextures(aiMaterial *mat, aiTextureType type, std::string nametype);
-
+    void Load();
 public:
     Model(std::string path);
     void Draw(GLShader& shader);

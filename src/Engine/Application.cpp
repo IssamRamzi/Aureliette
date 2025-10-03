@@ -9,8 +9,8 @@
 #include "Ogl/GLShader.h"
 #include "geometry/Model.h"
 
-Application::Application(std::string title, int width, int height) {
-	window = new Window(width, height, title);
+Application::Application(Engine_window_attrs_t attrs) {
+	window = new Window(attrs.wWidth, attrs.wHeight, attrs.title, attrs.iconPath);
 	Init();
 }
 
@@ -25,28 +25,26 @@ Application::~Application() {
 }
 
 void Application::Run() {
+	Triangle t1(vec3_f(0.0f, -0.6f, -4.0f));
+	Triangle t2(vec3_f(0.0f, 0.9f, -0.5f));
+	Pyramid p1 (vec3_f(3.0f, 0.9f, 2.5f));
 
-
-	std::vector<Vertex> triangle_verts = {
-		Vertex{{0.0f,  0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}},
-		Vertex{{-0.5f, -0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}},
-		Vertex{{0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}}
+	Texture texture{"../assets/textures/wall.jpg"};
+	Mesh mesh{{
+		Vertex{{0.0f,  0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0, 0.0}},
+		Vertex{{-0.5f, -0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}, {1.0, 0.0}},
+		Vertex{{0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.5, 1.0}}
+	},
+		{0,1,2},
+		{texture}
 	};
 
-	std::vector<GLuint> triangle_ind = {0,1,2};
-	Mesh triangleMesh{triangle_verts, triangle_ind, {}};
-
-
-	std::vector<Vertex> vertices;
-	std::vector<GLuint> indecies;
-	// ObjectLoader::LoadObject("../objects/cat.obj", &vertices, &indecies);
-	// Mesh mesh{vertices, indecies, {}};
-	Model backpack{"../objects/backpack"};
-
-	Triangle t1(vec3_f(0.0f, -0.6f, -4.0f), &triangleMesh);
-	Triangle t2(vec3_f(0.0f, 0.9f, -0.5f), &triangleMesh);
-	Pyramid p1 (vec3_f(3.0f, 0.9f, 2.5f));
-	GLShader shader{"../shaders/vert_camera.glsl", "../shaders/frag_camera.glsl"};
+	// GLShader shader{"../shaders/vert_camera.glsl", "../shaders/frag_camera.glsl"};
+	GLShader shader{"../shaders/vert_textures.glsl", "../shaders/frag_textures.glsl"};
+	texture.Bind(0);
+	shader.EnableShader();
+	shader.SetUniform1i("texCoord", 0);
+	shader.DisableShader();
 	while (!glfwWindowShouldClose(window->GetWindowAdress())) {
 		InputManager::getPressedKeys();
         ProcessInput();
@@ -58,12 +56,11 @@ void Application::Run() {
         shader.EnableShader();
 		shader.SetUniformMat4("camera", camera->CalculateMatrix(0.0, -0.5));
 
-		backpack.Draw(shader);
+		mesh.Draw();
 
         t1.Draw(shader);
         t2.Draw(shader);
 		p1.Draw(shader);
-		// mesh.Draw();
         shader.DisableShader();
 
         glfwSwapBuffers(window->GetWindowAdress());

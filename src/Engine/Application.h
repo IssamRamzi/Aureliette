@@ -1,6 +1,14 @@
 #include "core/Camera.h"
 #include "core/Window.h"
 
+
+struct Engine_window_attrs_t {
+    std::string title{"Game Engine"};
+    int wWidth{800};
+    int wHeight{800};
+    std::string iconPath{" "};
+};
+
 class Application{
 private:
     Window* window;
@@ -10,7 +18,7 @@ private:
     void ProcessInput();
 
 public:
-    Application(std::string title = "Window", int width = 800, int height = 800);
+    Application(Engine_window_attrs_t);
     ~Application();
     void Init();
 
