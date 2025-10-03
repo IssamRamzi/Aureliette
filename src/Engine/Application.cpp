@@ -44,6 +44,7 @@ void Application::Run() {
 	texture.Bind(0);
 	shader.EnableShader();
 	shader.SetUniform1i("texCoord", 0);
+
 	shader.DisableShader();
 	while (!glfwWindowShouldClose(window->GetWindowAdress())) {
 		InputManager::getPressedKeys();
