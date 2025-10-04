@@ -42,7 +42,6 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES}
 		src/Engine/core/ObjectLoader.h
 		src/Engine/geometry/Model.cpp
 		src/Engine/geometry/Model.h
-		external/tiny_obj_loader.h
 )
 
 # Find OpenGL

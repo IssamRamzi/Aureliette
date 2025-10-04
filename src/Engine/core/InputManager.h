@@ -12,13 +12,19 @@
 #include "GLFW/glfw3.h"
 
 
-enum Key{UP, DOWN, LEFT, RIGHT, SPACE, ENTER, ESCAPE, CTRL, SHIFT, Z, Q, S, D, KeysCount};
+enum Key{UP, DOWN, LEFT, RIGHT, SPACE, ENTER, ESCAPE, CTRL, SHIFT, Z, Q, S, D, A, E, KeysCount};
+enum MouseButton{BUTTON_LEFT, BUTTON_RIGHT, BUTTON_MIDDLE, MouseCount};
 
 class InputManager {
 private:
     static GLFWwindow* m_window;
     static std::vector<bool> keysPressed;
+    static std::vector<bool> mousePressed;
     static std::map<int, Key> keyMap;
+    static std::map<int, MouseButton> mouseMap;
+
+    static double prevMouseX, currentMouseX, prevMouseY, currentMouseY;
+
 private:
     InputManager() = delete;
     ~InputManager() = delete;
@@ -26,8 +32,12 @@ private:
 public:
     static void Init(GLFWwindow* _window);
 
-    static void getPressedKeys();
+    static void Update();
+
     static bool IsKeyPressed(Key key);
+    static bool IsMouseClicked(MouseButton button);
+
+    static Vec2<float> GetMovementVector();
 };
 
 

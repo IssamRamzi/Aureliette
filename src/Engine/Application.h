@@ -14,6 +14,8 @@ private:
     Window* window;
     Camera* camera;
 
+    bool seeLine = false;
+
 
     void ProcessInput();
 

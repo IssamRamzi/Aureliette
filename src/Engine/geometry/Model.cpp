@@ -15,6 +15,5 @@ void Model::Draw(GLShader& shader) {
         mesh.Draw();
     }
     shader.EnableShader();
-
 }
 
