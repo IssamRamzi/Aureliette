@@ -8,6 +8,8 @@
 #include "Ogl/GLShader.h"
 #include "geometry/Model.h"
 #include "imgui.h"
+#include "backends/imgui_impl_glfw.h"
+#include "backends/imgui_impl_opengl3.h"
 
 Application::Application(Engine_window_attrs_t& attrs) {
 	window = new Window(attrs.wWidth, attrs.wHeight, attrs.title, attrs.iconPath);
@@ -18,6 +20,18 @@ Application::Application(Engine_window_attrs_t& attrs) {
 }
 
 void Application::Init() {
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	// Optional: enable keyboard/gamepad navigation
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+
+	// Setup style
+	ImGui::StyleColorsDark(); // or ImGui::StyleColorsClassic();
+
+	// Setup platform/renderer bindings
+	ImGui_ImplGlfw_InitForOpenGL(window->GetWindowAdress(), true);
+	ImGui_ImplOpenGL3_Init("#version 330"); // OpenGL version used
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 	logger.Log(INFO, "Starting Engine...");
@@ -28,7 +42,6 @@ Application::~Application() {
 }
 
 void Application::Run() {
-
 	Triangle t1(vec3_f(0.0f, -0.6f, -4.0f));
 	Triangle t2(vec3_f(0.0f, 0.9f, -0.5f));
 	Pyramid p1 (vec3_f(3.0f, 0.9f, 2.5f));
@@ -111,6 +124,15 @@ void Application::Run() {
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+
+		ImGui::Begin("Camera Info");
+		ImGui::Text("Position: %.2f, %.2f, %.2f", camera->GetPosition().x, camera->GetPosition().y, camera->GetPosition().z);
+		ImGui::End();
+
 
         shader.EnableShader();
 		shader.SetUniformMat4("camera", camera->CalculateMatrix(0.1, 100.f));
@@ -129,17 +151,33 @@ void Application::Run() {
 		wall.Unbind();
         shader.DisableShader();
 
+
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+
         glfwSwapBuffers(window->GetWindowAdress());
         glfwPollEvents();
 	}
+
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
 
 }
 
 
 void Application::ProcessInput() {
+	if (!cursorDisabled)
 	camera->Update();
 	if (InputManager::IsKeyPressed(ESCAPE)) {
 		exit(EXIT_SUCCESS);
+	}
+
+	if (InputManager::IsKeyPressed(CTRL)) {
+		std::cout << "CTRL Pressed" << std::endl;
+		glfwSetInputMode(window->GetWindowAdress(), GLFW_CURSOR, cursorDisabled ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+		cursorDisabled = !cursorDisabled;
 	}
 
 	if (InputManager::IsKeyPressed(ENTER)) {

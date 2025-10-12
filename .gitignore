@@ -52,8 +52,8 @@ CTestTestfile.cmake
 _deps
 
 external/
-objects/
-objects/backpack
+assets/objects/
+assets/objects/backpack
 
 # Exclude Out Folder - As Everything there is compiled using CMake
 [Oo][Uu][Tt]

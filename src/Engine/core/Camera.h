@@ -16,6 +16,7 @@ public:
 
     mat4            CalculateMatrix(float nearPlane, float farPlane);
     void            Update();
+    vec3            GetPosition() const {return m_position;}
 
 private:
     Window          *m_window;

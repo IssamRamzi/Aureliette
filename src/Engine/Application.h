@@ -16,7 +16,7 @@ private:
     Camera* camera;
 
     bool seeLine = false;
-
+    bool cursorDisabled = true;
 
     void ProcessInput();
 

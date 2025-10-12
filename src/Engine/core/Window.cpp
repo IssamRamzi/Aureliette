@@ -50,7 +50,6 @@ void Window::Init(){
     glfwMakeContextCurrent(m_window);
     glfwSetFramebufferSizeCallback(m_window, resize_callback);
     glfwSetWindowUserPointer(m_window, this);
-	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	if (!gladLoadGL()) {
 		logger.Log(WARNING, "Failed to initialize GLAD");
