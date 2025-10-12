@@ -13,7 +13,9 @@
 #include "math/kMath.h"
 
 
-enum Key{UP, DOWN, LEFT, RIGHT, SPACE, ENTER, ESCAPE, CTRL, SHIFT, Z, Q, S, D, A, E, KeysCount};
+enum Key{
+        UP, DOWN, LEFT, RIGHT, SPACE, ENTER, ESCAPE, LCTRL, RCTRL, LSHIFT, RSHIFT, A, B, C, D,
+        E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y , Z, KeysCount};
 enum MouseButton{BUTTON_LEFT, BUTTON_RIGHT, BUTTON_MIDDLE, MouseCount};
 
 class InputManager {

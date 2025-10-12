@@ -15,8 +15,9 @@ private:
     Window* window;
     Camera* camera;
 
-    bool seeLine = false;
+    bool seeLine = false, imguiRender = true;
     bool cursorDisabled = true;
+
 
     void ProcessInput();
 

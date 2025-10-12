@@ -10,6 +10,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <vector>
 
 enum LOG_LEVEL {
     DEBUG,
@@ -23,9 +24,12 @@ std::string GetLogLevelString(LOG_LEVEL level);
 class Logger {
 private:
     std::ofstream file;
+    std::vector<std::string> logs;
 public:
     Logger(const char* filename);
     ~Logger();
+
+    std::vector<std::string> GetLogs() const {return logs;}
 
     template<typename... Args>
     void Log(LOG_LEVEL level, const std::string& logMessage, Args&&... args) {
@@ -40,6 +44,7 @@ public:
         sstream << std::endl;
 
         std::cout << sstream.str();
+        logs.emplace_back(sstream.str());
         if (file.is_open()) {
             file << sstream.str();
             // file.flush();

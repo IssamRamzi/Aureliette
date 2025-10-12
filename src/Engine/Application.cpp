@@ -127,10 +127,14 @@ void Application::Run() {
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
-
-
 		ImGui::Begin("Camera Info");
 		ImGui::Text("Position: %.2f, %.2f, %.2f", camera->GetPosition().x, camera->GetPosition().y, camera->GetPosition().z);
+		ImGui::End();
+
+		ImGui::Begin("Logs Info");
+		for (auto log : logger.GetLogs()) {
+			ImGui::Text(log.c_str());
+		}
 		ImGui::End();
 
 
@@ -151,9 +155,9 @@ void Application::Run() {
 		wall.Unbind();
         shader.DisableShader();
 
+			ImGui::Render();
+			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 
         glfwSwapBuffers(window->GetWindowAdress());
