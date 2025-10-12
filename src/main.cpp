@@ -12,7 +12,7 @@
 #include "Utils.h"
 
 int main() {
-	Engine_window_attrs_t attributs{.title = "Aureliette", 1600, 900, "jellyfish.png"};
+	Engine_window_attrs_t attributs{.title = "Aureliette", 1600, 900, "../assets/config/aureliette-logo.png"};
 	Application application{attributs};
 	application.Run();
 

@@ -11,11 +11,11 @@
 
 Mesh::Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indecies, std::vector<Texture> textures) : m_vertices(vertices), m_indecies(indecies), m_textures(textures) {
     VAO = new GLVertexArrayBuffer();
-    VBO = new GLBuffer(vertices, 6);
+    VBO = new GLBuffer(vertices, 8);
     EBO = new GLIndexBuffer(indecies);
     VAO->AddBuffer(*VBO, 0, 3, sizeof(Vertex), (void*)0);                   // pos
-    VAO->AddBuffer(*VBO, 1, 3, sizeof(Vertex), (void*)(3 * sizeof(float))); // col
-    VAO->AddBuffer(*VBO, 2, 2, sizeof(Vertex), (void*)(6 * sizeof(float))); // texcoords
+    VAO->AddBuffer(*VBO, 1, 3, sizeof(Vertex), (void*)(offsetof(Vertex, color))); // col
+    VAO->AddBuffer(*VBO, 2, 2, sizeof(Vertex), (void*)(offsetof(Vertex, texcoords))); // texcoords
 }
 
 Mesh::~Mesh() {
@@ -29,16 +29,36 @@ void Mesh::Draw() {
     VAO->Bind();
     EBO->Bind();
 
-    for (auto& texture : m_textures) {
-        texture.Bind(0);
-    }
 
     glDrawElements(GL_TRIANGLES, EBO->GetCount(), GL_UNSIGNED_INT, 0);
 
-    for (auto& texture : m_textures) {
-        texture.Unbind();
+    for (int i = m_textures.size() - 1; i >= 0; i--) {
+        m_textures[i].Unbind();
     }
 
     EBO->Unbind();
     VAO->Unbind();
 }
+
+void Mesh::Draw(GLShader& shader) {
+    VAO->Bind();
+    EBO->Bind();
+
+    for (size_t i = 0; i < m_textures.size(); i++) {
+        m_textures[i].Bind(i);
+    }
+
+
+    glDrawElements(GL_TRIANGLES, EBO->GetCount(), GL_UNSIGNED_INT, 0);
+
+    for (int i = m_textures.size() - 1; i >= 0; i--) {
+        m_textures[i].Unbind();
+    }
+
+    EBO->Unbind();
+    VAO->Unbind();
+}
+
+
+
+

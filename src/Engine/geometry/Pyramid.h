@@ -53,8 +53,9 @@ public:
     }
     void Draw(GLShader& shader, bool rotate = false) {
         mat4_f modelMatrix{1};
-        if (rotate)
-            modelMatrix = mat4_f::translation(m_position) * mat4_f::rotation(180,{1.0,0.0,0.0});
+        if (rotate) {
+            modelMatrix = mat4_f::translation(m_position) * mat4_f::rotation((float)glfwGetTime() * 10,{0.0,0.0,0.0});
+        }
         else
             modelMatrix = mat4_f::translation(m_position);
 

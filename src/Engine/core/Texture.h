@@ -29,7 +29,7 @@ private:
     int             m_height, m_width, m_numColCh;
 
 public:
-    void            Bind(GLuint unit);
+    void            Bind(GLuint unit = 0);
     void            Unbind();
 
 };

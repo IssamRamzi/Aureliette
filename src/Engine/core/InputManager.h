@@ -10,6 +10,7 @@
 #include "Globals.h"
 #include "Window.h"
 #include "GLFW/glfw3.h"
+#include "math/kMath.h"
 
 
 enum Key{UP, DOWN, LEFT, RIGHT, SPACE, ENTER, ESCAPE, CTRL, SHIFT, Z, Q, S, D, A, E, KeysCount};
@@ -19,6 +20,7 @@ class InputManager {
 private:
     static GLFWwindow* m_window;
     static std::vector<bool> keysPressed;
+    static std::vector<bool> lastKeysPressed;
     static std::vector<bool> mousePressed;
     static std::map<int, Key> keyMap;
     static std::map<int, MouseButton> mouseMap;
@@ -34,10 +36,12 @@ public:
 
     static void Update();
 
+    static bool IsKeyDown(Key key);
     static bool IsKeyPressed(Key key);
     static bool IsMouseClicked(MouseButton button);
 
-    static Vec2<float> GetMovementVector();
+    static Vec2<float> GetMousePosition();
+    static Vec2<float> GetMouseDelta();
 };
 
 

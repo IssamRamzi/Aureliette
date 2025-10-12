@@ -1,3 +1,4 @@
+#pragma once
 #include "core/Camera.h"
 #include "core/Window.h"
 
@@ -20,7 +21,7 @@ private:
     void ProcessInput();
 
 public:
-    Application(Engine_window_attrs_t);
+    Application(Engine_window_attrs_t&);
     ~Application();
     void Init();
 

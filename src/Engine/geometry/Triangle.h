@@ -22,19 +22,19 @@ private:
     Mesh* m_mesh;
 
     std::vector<Vertex> vertices = {
-        Vertex{{0.0f,  0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0, 0.0}},
-        Vertex{{-0.5f, -0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}, {1.0, 0.0}},
-        Vertex{{0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.5, 1.0}}
+        Vertex{{0.0f,  0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.5f, 1.0f}},
+        Vertex{{-0.5f, -0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f}},
+        Vertex{{0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f}}
     };
-
     std::vector<GLuint> indices = {0,1,2};
+	Texture texture{"../assets/textures/wall.jpg"};
 
 public:
     Triangle(vec3_f pos, Mesh *mesh = nullptr) : m_position(pos), m_mesh(mesh) {
         if (mesh) {
             m_mesh = mesh;
         } else {
-            m_mesh = new Mesh{vertices, indices, {}}; // use members here
+            m_mesh = new Mesh{vertices, indices, {texture}}; // use members here
         }
     }
 
@@ -48,7 +48,7 @@ public:
             modelMatrix = mat4_f::translation(m_position);
 
         shader.SetUniformMat4("model", modelMatrix);
-        m_mesh->Draw();
+        m_mesh->Draw(shader);
     }
 };
 

@@ -28,6 +28,7 @@ public:
     Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indecies, std::vector<Texture> textures);
     ~Mesh();
     void Draw();
+    void Draw(GLShader& shader);
 };
 
 

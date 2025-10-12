@@ -6,9 +6,9 @@
 
 #define PI 3.141592653589793
 
-    static float deg_to_radians(float deg){
-        return deg * PI * 1 / 180;
-    }
+static float deg_to_radians(float deg){
+    return deg * PI * 1 / 180;
+}
 
 
 
@@ -213,6 +213,11 @@ struct Vec3 {
 
     bool operator==(const Vec3& another) const {
         return x == another.x && y == another.y && z == another.z;
+    }
+
+    static Vec3 normalize(Vec3 v) {
+        float lenght = sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
+        return {v.x / lenght, v.y / lenght, v.z / lenght};
     }
 };
 
@@ -697,7 +702,7 @@ struct Matrix4 {
         return res;
     }
 
-    static Matrix4 rotation(float angle, Vec3<T> axes) { // (1, 0, 0) for X, (0, 0, 1) for z etc
+    static Matrix4 rotation(float angle, Vec3<T> axes) { // (1, 0, 0) pr X, (0, 0, 1) pr z etc
         Matrix4 res(1);
         float r = deg_to_radians(angle);
         float s = sin(r);
@@ -707,17 +712,17 @@ struct Matrix4 {
         float y = axes.y;
         float z = axes.z;
 
-        res.data[0 + 0 * 4] = x * x * (1.0 - c) + c;
-        res.data[1 + 0 * 4] = y * x * (1.0 - c) + z * s;
-        res.data[2 + 0 * 4] = z * x * (1.0 - c) - y * s;
+        res.data[0] = x * x * (1 - c) + c;
+        res.data[1] = x * y * (1 - c) - z * s;
+        res.data[2] = x * z * (1 - c) + y * s;
 
-        res.data[0 + 1 * 4] = x * y * (1.0 - c) - z * s;
-        res.data[1 + 1 * 4] = y * y *  (1.0 - c) + c;
-        res.data[2 + 1 * 4] = z * y * (1.0 - c) + x * s;
+        res.data[0 + 4] = x * y * (1 - c) + z * s;
+        res.data[1 + 4] = c + y * y * (1 - c);
+        res.data[2 + 4] = y * z * (1 - c) - x * s;
 
-        res.data[0 + 2 * 4] = x * z * (1.0 - c) + y * s;
-        res.data[1 + 2 * 4] = y * z * (1.0 - c) - x * s;
-        res.data[2 + 2 * 4] = z * z * (1.0 - c) + s;
+        res.data[0 + 8] = x * z * (1 - c) - y * s;
+        res.data[1 + 8] = z * y * (1 - c) + x * s;
+        res.data[2 + 8] = c + z * z * (1 - c);
 
         return res;
     }

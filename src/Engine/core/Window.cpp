@@ -40,7 +40,7 @@ void Window::Init(){
         return;
 	}
 
-	if (m_iconPath != "") {
+	if (!m_iconPath.empty()) {
 		GLFWimage images[1];
 		images[0].pixels = stbi_load(m_iconPath.c_str(), &images[0].width, &images[0].height, 0, 4); //rgba channels
 		glfwSetWindowIcon(m_window, 1, images);
@@ -50,6 +50,7 @@ void Window::Init(){
     glfwMakeContextCurrent(m_window);
     glfwSetFramebufferSizeCallback(m_window, resize_callback);
     glfwSetWindowUserPointer(m_window, this);
+	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	if (!gladLoadGL()) {
 		logger.Log(WARNING, "Failed to initialize GLAD");

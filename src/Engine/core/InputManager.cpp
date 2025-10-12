@@ -27,7 +27,7 @@ std::map<int, MouseButton> InputManager::mouseMap = {
     {GLFW_MOUSE_BUTTON_RIGHT, BUTTON_RIGHT},
     {GLFW_MOUSE_BUTTON_MIDDLE, BUTTON_MIDDLE},
 };
-
+std::vector<bool> InputManager::lastKeysPressed(KeysCount, false);
 std::vector<bool> InputManager::keysPressed(KeysCount, false);
 std::vector<bool> InputManager::mousePressed(MouseCount, false);
 
@@ -49,6 +49,7 @@ void InputManager::Init(GLFWwindow* _window) {
 }
 
 void InputManager::Update() {
+    lastKeysPressed = keysPressed;
     for (const std::pair<int, Key> pair : keyMap)
     {
         if (pair.second == Key::KeysCount) break;
@@ -65,6 +66,7 @@ void InputManager::Update() {
     prevMouseX = currentMouseX;
     prevMouseY = currentMouseY;
     glfwGetCursorPos(m_window, &currentMouseX, &currentMouseY);
+
 }
 
 bool InputManager::IsMouseClicked(MouseButton button){
@@ -73,12 +75,22 @@ bool InputManager::IsMouseClicked(MouseButton button){
 
 
 bool InputManager::IsKeyPressed(Key key) {
+    int idx = static_cast<int>(key);
+    return keysPressed[idx] && !lastKeysPressed[idx];
+}
+
+bool InputManager::IsKeyDown(Key key) {
     return keysPressed.at(static_cast<size_t>(key));
 }
 
-Vec2<float> InputManager::GetMovementVector(){
+Vec2<float> InputManager::GetMousePosition(){
+    return Vec2<float>{static_cast<float>(currentMouseX),static_cast<float>(currentMouseY)};
+}
+
+Vec2<float> InputManager::GetMouseDelta(){
     float deltaX = currentMouseX - prevMouseX;
     float deltaY = currentMouseY - prevMouseY;
     return {deltaX, deltaY};
 }
+
 

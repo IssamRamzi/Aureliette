@@ -5,15 +5,13 @@ project(Aureliette)
 # Add all Source Files
 file(GLOB_RECURSE SOURCE_FILES
 		${CMAKE_SOURCE_DIR}/src/*.cpp
-		${CMAKE_SOURCE_DIR}/src/core/*.cpp
-		${CMAKE_SOURCE_DIR}/src/math/*.cpp
-		${CMAKE_SOURCE_DIR}/src/window/*.cpp
 )
 
 # Add all Header Files
 file(GLOB_RECURSE HEADER_FILES
 		${CMAKE_SOURCE_DIR}/src/*.h
 		${CMAKE_SOURCE_DIR}/src/*.hpp
+		${CMAKE_SOURCE_DIR}/external/imgui/*.h
 )
 
 add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES}
@@ -42,6 +40,7 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES}
 		src/Engine/core/ObjectLoader.h
 		src/Engine/geometry/Model.cpp
 		src/Engine/geometry/Model.h
+		src/programs/cubesrotating.cpp
 )
 
 # Find OpenGL
@@ -52,11 +51,22 @@ set(GLFW_ROOT_DIR external/glfw)
 set(GLAD_ROOT_DIR external/glad)
 set(GLM_ROOT_DIR external/glm-1.0.1)
 set(STB_ROOT_DIR external/stbi_image)
+set(IMGUI_ROOT_DIR external/imgui)
+
 
 # --- Assimp (precompiled) ---
 set(ASSIMP_ROOT_DIR ${CMAKE_SOURCE_DIR}/external/assimp)
 set(ASSIMP_INCLUDE_DIR ${ASSIMP_ROOT_DIR}/include)
 set(ASSIMP_LIB_DIR ${ASSIMP_ROOT_DIR}/build/lib)
+
+add_library(imgui
+		${IMGUI_ROOT_DIR}/imgui.cpp
+		${IMGUI_ROOT_DIR}/imgui_draw.cpp
+		${IMGUI_ROOT_DIR}/imgui_tables.cpp
+		${IMGUI_ROOT_DIR}/imgui_widgets.cpp
+		${IMGUI_ROOT_DIR}/backends/imgui_impl_glfw.cpp
+		${IMGUI_ROOT_DIR}/backends/imgui_impl_opengl3.cpp
+)
 
 # Add external libs that are built with project
 add_subdirectory(${GLFW_ROOT_DIR})
@@ -77,16 +87,24 @@ target_include_directories(${PROJECT_NAME}
 		src/impl
 )
 
+target_include_directories(imgui PUBLIC
+		${IMGUI_ROOT_DIR}
+		${IMGUI_ROOT_DIR}/backends
+		${GLFW_ROOT_DIR}/include  # Needed by imgui_impl_glfw
+)
+
 # Link directories (for static/dynamic libs)
 target_link_directories(${PROJECT_NAME}
 		PRIVATE ${ASSIMP_LIB_DIR}
 )
 
+
+
 # Link libraries
 if (WIN32)
-	target_link_libraries(${PROJECT_NAME} glfw opengl32 glad assimp)
+	target_link_libraries(${PROJECT_NAME} glfw opengl32 glad assimp imgui)
 elseif (UNIX)
-	target_link_libraries(${PROJECT_NAME} glfw GL glad assimp)
+	target_link_libraries(${PROJECT_NAME} glfw GL glad assimp imgui)
 endif ()
 
 # --- Post-build step: copy DLL (Windows only) ---
