@@ -27,7 +27,7 @@ private:
         Vertex{{0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f}}
     };
     std::vector<GLuint> indices = {0,1,2};
-	Texture texture{"../assets/textures/wall.jpg"};
+	GLTexture texture{"../assets/textures/wall.jpg"};
 
 public:
     Triangle(vec3_f pos, Mesh *mesh = nullptr) : m_position(pos), m_mesh(mesh) {

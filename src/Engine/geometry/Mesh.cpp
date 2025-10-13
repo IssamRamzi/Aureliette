@@ -7,9 +7,9 @@
 #include "Ogl/GLVertexArrayBuffer.h"
 #include "Ogl/GLIndexBuffer.h"
 #include "Ogl/GLShader.h"
-#include "core/Texture.h"
+#include "../../impl/Ogl/GLTexture.h"
 
-Mesh::Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indecies, std::vector<Texture> textures) : m_vertices(vertices), m_indecies(indecies), m_textures(textures) {
+Mesh::Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indecies, std::vector<GLTexture> textures) : m_vertices(vertices), m_indecies(indecies), m_textures(textures) {
     VAO = new GLVertexArrayBuffer();
     VBO = new GLBuffer(vertices, 8);
     EBO = new GLIndexBuffer(indecies);
@@ -29,6 +29,9 @@ void Mesh::Draw() {
     VAO->Bind();
     EBO->Bind();
 
+    for (size_t i = 0; i < m_textures.size(); i++) {
+        m_textures[i].Bind(i);
+    }
 
     glDrawElements(GL_TRIANGLES, EBO->GetCount(), GL_UNSIGNED_INT, 0);
 

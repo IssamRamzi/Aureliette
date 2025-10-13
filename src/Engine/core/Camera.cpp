@@ -32,7 +32,7 @@ void Camera::Update() {
 
 void Camera::ProcessKeyboardInputs(){
     float speed;
-    if (InputManager::IsKeyDown(SHIFT)) {
+    if (InputManager::IsKeyDown(LSHIFT)) {
         speed = max_speed;
     }
     else {

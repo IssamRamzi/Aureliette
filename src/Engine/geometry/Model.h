@@ -9,7 +9,7 @@
 #include "assimp/Importer.hpp"
 #include "assimp/scene.h"
 #include "assimp/postprocess.h"
-#include "core/Texture.h"
+#include "../../impl/Ogl/GLTexture.h"
 #include "Ogl/GLShader.h"
 
 class Mesh;

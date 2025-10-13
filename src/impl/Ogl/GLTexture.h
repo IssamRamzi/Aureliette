@@ -16,10 +16,10 @@ enum TextureType {
 };
 
 
-class Texture {
+class GLTexture {
 public:
-    Texture(const char* m_path);
-    ~Texture();
+    GLTexture(const char* m_path);
+    ~GLTexture();
 
     TextureType     m_type;
     GLuint          m_texture;

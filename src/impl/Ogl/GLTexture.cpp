@@ -1,18 +1,17 @@
-#include "Texture.h"
+#include "GLTexture.h"
 #include "Utils.h"
 #include <iostream>
 #include <algorithm>
-#include "Globals.h"
+#include "../../Engine/core/Globals.h"
 
-Texture::Texture(const char *m_path) : m_texture(0), m_width(0), m_height(0), m_numColCh(0), m_bytes(nullptr) {
+GLTexture::GLTexture(const char *m_path) : m_texture(0), m_width(0), m_height(0), m_numColCh(0), m_bytes(nullptr) {
     if (strlen(m_path) < 5) {
         std::cout << "Invalid texture path" << std::endl;
         return;
     }
 
-    // Extraction de l'extension
     std::string path_str(m_path);
-    size_t dot_pos = path_str.find_last_of('.');
+    i8 dot_pos = path_str.find_last_of('.');
     if (dot_pos == std::string::npos) {
         std::cout << "No file extension found" << std::endl;
         return;
@@ -55,7 +54,7 @@ Texture::Texture(const char *m_path) : m_texture(0), m_width(0), m_height(0), m_
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-    // Déterminer le format en fonction du nombre de canaux
+
     GLenum format;
     switch (m_numColCh) {
         case 1:
@@ -90,13 +89,13 @@ Texture::Texture(const char *m_path) : m_texture(0), m_width(0), m_height(0), m_
     }
 }
 
-Texture::~Texture() {
+GLTexture::~GLTexture() {
     if (m_texture != 0) {
         glDeleteTextures(1, &m_texture);
     }
 }
 
-void Texture::Bind(GLuint unit) {
+void GLTexture::Bind(GLuint unit) {
     if (m_texture == 0) {
         std::cout << "Warning: Trying to bind invalid texture (ID = 0)" << std::endl;
         return;
@@ -105,6 +104,6 @@ void Texture::Bind(GLuint unit) {
     glBindTexture(GL_TEXTURE_2D, m_texture);
 }
 
-void Texture::Unbind() {
+void GLTexture::Unbind() {
     glBindTexture(GL_TEXTURE_2D, 0);
 }
