@@ -37,6 +37,7 @@ OpenGLStarter
 # CMake GitIgnore
 .idea
 .vscode
+.vs
 build
 CMakeLists.txt.user
 CMakeCache.txt
