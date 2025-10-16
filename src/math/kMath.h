@@ -10,8 +10,6 @@ static float deg_to_radians(float deg){
     return deg * PI * 1 / 180;
 }
 
-
-
 /*
 =====================================================================================
 
@@ -25,8 +23,13 @@ struct Vec2 {
     T x, y;
 
     Vec2() : x(0), y(0) {}
+    Vec2(T v) : x(v), y(v) {}
     Vec2(T _x, T _y) : x(_x), y(_y) {}
     ~Vec2() {}
+
+    static const Vec2<T> ZERO;
+    static const Vec2<T> ONE;
+
 
     Vec2& add(const Vec2& another) {
         x += another.x;
@@ -76,6 +79,11 @@ struct Vec2 {
         return *this;
     }
 
+    Vec2& operator=(const Vec2& another) {
+        x = another.x, y = another.y;
+        return *this;
+    }
+
     Vec2& operator+=(const Vec2& another) {
         return this->add(another);
     }
@@ -95,6 +103,43 @@ struct Vec2 {
     bool operator==(const Vec2& another) const {
         return x == another.x && y == another.y;
     }
+
+    double dot(Vec2 another) {
+        return x*another.x + y*another.y;
+    }
+
+    static double dot(Vec2 vec1, Vec2 vec2) {
+        return vec1.x*vec2.x + vec1.y*vec2.y;
+    }
+
+    double length() {
+        return sqrt(x*x + y*y);
+    }
+
+    static double length(Vec2 vec) {
+        return sqrt(vec.x*vec.x + vec.y*vec.y);
+    }
+
+    Vec2 normalize() const{
+        double l = length();
+        x /= l, y /= l;
+        return *this;
+    }
+
+    static Vec2 normalize(Vec2 vec) {
+        double l = length(vec);
+        vec.x /= l, vec.y /= l;
+        return vec;
+    }
+
+    double distance(Vec2 vec) {
+        return length(vec - *this);
+    }
+
+    static double distance(Vec2 vec, Vec2 vec2) {
+        return length(vec - vec2);
+    }
+
 };
 
 template<typename T>
@@ -123,6 +168,11 @@ std::ostream& operator<<(std::ostream& os, const Vec2<T>& vec) {
     return os;
 }
 
+template<typename T>
+const Vec2<T> Vec2<T>::ZERO = {0,0};
+template<typename T>
+const Vec2<T> Vec2<T>::ONE = {1,1};
+
 /*
 =====================================================================================
 
@@ -138,6 +188,15 @@ struct Vec3 {
     Vec3() : x(0), y(0), z(0) {}
     Vec3(T _x, T _y, T _z) : x(_x), y(_y), z(_z) {}
     ~Vec3() {}
+
+    static const Vec3<T> ZERO;
+    static const Vec3<T> ONE;
+    static const Vec3<T> UP;
+    static const Vec3<T> DOWN;
+    static const Vec3<T> LEFT;
+    static const Vec3<T> RIGHT;
+    static const Vec3<T> FORWARD;
+    static const Vec3<T> BACK;
 
     Vec3& add(const Vec3& another) {
         x += another.x;
@@ -195,6 +254,11 @@ struct Vec3 {
         return *this;
     }
 
+    Vec3& operator=(const Vec3& another) {
+        x = another.x, y = another.y, z = another.z;
+        return *this;
+    }
+
     Vec3& operator+=(const Vec3& another) {
         return this->add(another);
     }
@@ -215,9 +279,39 @@ struct Vec3 {
         return x == another.x && y == another.y && z == another.z;
     }
 
+    double dot(Vec3 another) {
+        return x*another.x + y*another.y + z*another.z;
+    }
+
+    static double dot(Vec3 vec1, Vec3 vec2) {
+        return vec1.x*vec2.x + vec1.y*vec2.y + vec1.z*vec2.z;
+    }
+
+    double length() {
+        return sqrt(x*x + y*y + z*z);
+    }
+
+    static double length(Vec3 v) {
+        return sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
+    }
+
+    Vec3 normalize() {
+        double l = length();
+        x /= l, y /= l, z /= l;
+        return *this;
+    }
+
     static Vec3 normalize(Vec3 v) {
-        float lenght = sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
-        return {v.x / lenght, v.y / lenght, v.z / lenght};
+        float l = length(v);
+        return {v.x / l, v.y / l, v.z / l};
+    }
+
+    double distance(Vec3 vec) {
+        return length(vec - *this);
+    }
+
+    static double distance(Vec3 vec, Vec3 vec2) {
+        return length(vec - vec2);
     }
 };
 
@@ -247,6 +341,23 @@ std::ostream& operator<<(std::ostream& os, const Vec3<T>& vec) {
     return os;
 }
 
+template<typename T>
+const Vec3<T> Vec3<T>::ZERO = {0,0,0};
+template<typename T>
+const Vec3<T> Vec3<T>::ONE = {1,1,1};
+template<typename T>
+const Vec3<T> Vec3<T>::UP = {0,1,0};
+template<typename T>
+const Vec3<T> Vec3<T>::DOWN = {0, -1, 0};
+template<typename T>
+const Vec3<T> Vec3<T>::LEFT = {-1, 0, 0};
+template<typename T>
+const Vec3<T> Vec3<T>::RIGHT = {1, 0, 0};
+template<typename T>
+const Vec3<T> Vec3<T>::FORWARD = {0,0,1};
+template<typename T>
+const Vec3<T> Vec3<T>::BACK = {0,0,-1};
+
 
 /*
 =====================================================================================
@@ -263,6 +374,9 @@ struct Vec4 {
     Vec4() : x(0), y(0), z(0), w(0) {}
     Vec4(T _x, T _y, T _z, T _w) : x(_x), y(_y), z(_z), w(_w) {}
     ~Vec4() {}
+
+    static const Vec4<T> ZERO;
+    static const Vec4<T> ONE;
 
     Vec4& add(const Vec4& another) {
         x += another.x;
@@ -328,6 +442,11 @@ struct Vec4 {
         return *this;
     }
 
+    Vec4& operator=(const Vec4& another) {
+        x = another.x, y = another.y, z = another.z, w = another.w;
+        return *this;
+    }
+
     Vec4& operator+=(const Vec4& another) {
         return this->add(another);
     }
@@ -347,6 +466,34 @@ struct Vec4 {
     bool operator==(const Vec4& another) const {
         return x == another.x && y == another.y && z == another.z && w == another.w;
     }
+
+    double dot(Vec4 another) {
+        return x*another.x + y*another.y + z*another.z + w*another.w;
+    }
+
+    static double dot(Vec4 vec1, Vec4 vec2) {
+        return vec1.x*vec2.x + vec1.y*vec2.y + vec1.z*vec2.z + vec1.w*vec2.w;
+    }
+
+    double length() {
+        return sqrt(x*x + y*y + z*z + w*w);
+    }
+
+    static double length(Vec4 v) {
+        return sqrt(v.x*v.x + v.y*v.y + v.z*v.z + v.w*v.w);
+    }
+
+    Vec4 normalize() {
+        double l = length();
+        x /= l, y /= l, z /= l, w /= l;
+        return *this;
+    }
+
+    static Vec4 normalize(Vec4 v) {
+        float length = length(v);
+        return {v.x / length, v.y / length, v.z / length, v.w / length};
+    }
+
 };
 
 template<typename T>
@@ -374,6 +521,11 @@ std::ostream& operator<<(std::ostream& os, const Vec4<T>& vec) {
     os << "Vec4(" << vec.x << ", " << vec.y << ", " << vec.z << ", " << vec.w << ")" << std::endl;
     return os;
 }
+
+template<typename T>
+const Vec4<T> Vec4<T>::ZERO = {0,0,0,0};
+template<typename T>
+const Vec4<T> Vec4<T>::ONE = {1,1,1,1};
 
 
 /*
@@ -625,12 +777,29 @@ struct Matrix4 {
         return os;
     }
 
-    // TODO
     T det() {
-        T a = data[0] * (data[4] * data[8] - data[5] * data[7]);
-        T b = data[1] * (data[3] * data[8] - data[5] * data[6]);
-        T c = data[2] * (data[3] * data[7] - data[4] * data[6]);
-        return a - b + c;
+        T a = data[0] * (
+        data[5] * (data[10] * data[15] - data[11] * data[14]) -
+        data[6] * (data[9] * data[15] - data[11] * data[13]) +
+        data[7] * (data[9] * data[14] - data[10] * data[13])
+        );
+        T b = data[1] * (
+            data[4] * (data[10] * data[15] - data[11] * data[14]) -
+            data[6] * (data[8] * data[15] - data[11] * data[12]) +
+            data[7] * (data[8] * data[14] - data[10] * data[12])
+        );
+        T c = data[2] * (
+            data[4] * (data[9] * data[15] - data[11] * data[13]) -
+            data[5] * (data[8] * data[15] - data[11] * data[12]) +
+            data[7] * (data[8] * data[13] - data[9] * data[12])
+        );
+        T d = data[3] * (
+            data[4] * (data[9] * data[14] - data[10] * data[13]) -
+            data[5] * (data[8] * data[14] - data[10] * data[12]) +
+            data[6] * (data[8] * data[13] - data[9] * data[12])
+        );
+
+        return a - b + c - d;
     }
 
     Vec4<T> getColumn(uint8_t col) {
@@ -703,6 +872,7 @@ struct Matrix4 {
     }
 
     static Matrix4 rotation(float angle, Vec3<T> axes) { // (1, 0, 0) pr X, (0, 0, 1) pr z etc
+        // TODO axes = Vec3<T>::normalize(axes);
         Matrix4 res(1);
         float r = deg_to_radians(angle);
         float s = sin(r);
