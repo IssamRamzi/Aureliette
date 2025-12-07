@@ -15,8 +15,19 @@ private:
     Window* window;
     Camera* camera;
 
-    bool seeLine = false, imguiRender = true;
-    bool cursorDisabled = true;
+    bool seeLine = false;
+    bool cursorDisabled = false;
+    bool showCat = false;
+    bool showCubes = false;
+    bool showStatue = false;
+    bool showBackpack = false;
+    bool showSilentHill = true;
+    bool imguiOpen = false; 
+    // bool showTemple = true;
+    float rotationSpeed = 0.05f;
+	float farPlane = 100.0f;
+
+    vec3_f clearColor = {1.0f, 0.5f, 0.31f};
 
 
     void ProcessInput();

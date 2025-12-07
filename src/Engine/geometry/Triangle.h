@@ -14,8 +14,6 @@
 #include "Ogl/GLVertexArrayBuffer.h"
 
 
-
-
 class Triangle {
 private:
     vec3_f m_position;
@@ -27,14 +25,14 @@ private:
         Vertex{{0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {1.0f, 0.0f}}
     };
     std::vector<GLuint> indices = {0,1,2};
-	GLTexture texture{"../assets/textures/wall.jpg"};
+	// GLTexture texture{"../assets/textures/wall.jpg"};
 
 public:
     Triangle(vec3_f pos, Mesh *mesh = nullptr) : m_position(pos), m_mesh(mesh) {
         if (mesh) {
             m_mesh = mesh;
         } else {
-            m_mesh = new Mesh{vertices, indices, {texture}}; // use members here
+            m_mesh = new Mesh{vertices, indices, {}}; // use members here
         }
     }
 

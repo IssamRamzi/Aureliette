@@ -1,10 +1,11 @@
 #pragma once
 
-#include <glad/glad.h>
+#include <../../../external/glad/include/glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include <string>
-#include "../math/kMath.h"
+#include "math/kMath.h"
+#include "Globals.h"
 
 
 class Window{
@@ -14,7 +15,7 @@ private:
     int m_width, m_height;
     std::string m_title;
     std::string m_iconPath;
-
+    Vec2<int> position;
 private:
     void Init();
 
@@ -24,6 +25,7 @@ private:
 public:
     Window(int width, int height, std::string title, std::string iconpath = "");
     ~Window();
+
 
 
     inline GLFWwindow* GetWindowAdress(){return m_window;}

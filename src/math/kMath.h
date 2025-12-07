@@ -259,6 +259,14 @@ struct Vec3 {
         return *this;
     }
 
+    bool operator==(const Vec3& another) {
+        return x == another.x && y == another.y && z == another.z;
+    }
+
+    bool operator!=(const Vec3& another) {
+        return !(*this == another);
+    }
+
     Vec3& operator+=(const Vec3& another) {
         return this->add(another);
     }
@@ -873,6 +881,8 @@ struct Matrix4 {
 
     static Matrix4 rotation(float angle, Vec3<T> axes) { // (1, 0, 0) pr X, (0, 0, 1) pr z etc
         // TODO axes = Vec3<T>::normalize(axes);
+        if (axes != Vec3<float>::ZERO)
+            axes = Vec3<T>::normalize(axes);
         Matrix4 res(1);
         float r = deg_to_radians(angle);
         float s = sin(r);

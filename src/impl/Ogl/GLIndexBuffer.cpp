@@ -24,10 +24,10 @@ GLIndexBuffer::~GLIndexBuffer() {
     glDeleteBuffers(1, &m_bufferID);
 }
 
-void GLIndexBuffer::Bind() const {
+void GLIndexBuffer::Bind() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_bufferID);
 }
 
-void GLIndexBuffer::Unbind() const {
+void GLIndexBuffer::Unbind() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }

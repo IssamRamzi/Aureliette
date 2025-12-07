@@ -3,9 +3,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image/stb_image.h"
 
-#define TINYOBJLOADER_IMPLEMENTATION
-#include "core/tiny_obj_loader.h"
-
 #include <iostream>
 
 #include "Application.h"

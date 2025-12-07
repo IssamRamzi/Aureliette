@@ -13,13 +13,17 @@
 #include "Ogl/GLShader.h"
 
 class Mesh;
-
+class GLTexture;
 class Model {
 private:
+    std::vector<std::shared_ptr<GLTexture>> m_textures;
     std::vector<Mesh> m_meshes;
-    std::string directory;
+    std::string m_directory;
 
-    void Load();
+    void Load(std::string&);
+    void processNode(aiNode *node, const aiScene *scene);
+    Mesh processMesh(aiMesh *mesh, const aiScene *scene);
+    std::vector<std::shared_ptr<GLTexture>> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
 public:
     Model(std::string path);
     void Draw(GLShader& shader);

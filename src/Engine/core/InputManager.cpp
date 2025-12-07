@@ -16,6 +16,7 @@ std::map<int, Key> InputManager::keyMap = {
     {GLFW_KEY_RIGHT_CONTROL, RCTRL},
     {GLFW_KEY_LEFT_SHIFT, LSHIFT},
     {GLFW_KEY_RIGHT_SHIFT, RSHIFT},
+    {GLFW_KEY_TAB, TAB},
     {GLFW_KEY_A, Q},
     {GLFW_KEY_B, B},
     {GLFW_KEY_C, C},

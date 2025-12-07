@@ -25,42 +25,37 @@ mat4 Camera::CalculateMatrix(float nearPlane, float farPlane){
     return projection * view; // TOUJOURS PROJ * VIEW
 }
 
-void Camera::Update() {
-    ProcessKeyboardInputs();
-    ProcessMouseInputs();
-}
 
 void Camera::ProcessKeyboardInputs(){
-    float speed;
     if (InputManager::IsKeyDown(LSHIFT)) {
-        speed = max_speed;
+        m_speed = max_speed;
     }
     else {
-        speed = m_initialSpeed;
+        m_speed = m_initialSpeed;
     }
 
-    if (InputManager::IsKeyDown(SPACE)) {
+    if (InputManager::IsKeyPressed(SPACE)) {
         m_orientation = vec3(0.0f, 0.0f, -1.0f);
         m_position = m_initialPosition;
     }
 
     if(InputManager::IsKeyDown(Z)){
-        m_position += speed * m_orientation;
+        m_position += m_speed * m_orientation;
     }
     if(InputManager::IsKeyDown(S)){
-        m_position += speed * -m_orientation;
+        m_position += m_speed * -m_orientation;
     }
     if(InputManager::IsKeyDown(Q)){
-        m_position += speed * -m_right;
+        m_position += m_speed * -m_right;
     }
     if(InputManager::IsKeyDown(D)){
-        m_position += speed * m_right;
+        m_position += m_speed * m_right;
     }
     if (InputManager::IsKeyDown(A)) {
-        m_position += speed * m_up;
+        m_position += m_speed * m_up;
     }
     if (InputManager::IsKeyDown(E)) {
-        m_position -= speed * m_up;
+        m_position -= m_speed * m_up;
     }
 }
 

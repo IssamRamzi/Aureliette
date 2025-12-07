@@ -4,22 +4,22 @@
 
 #ifndef GLBUFFER_H
 #define GLBUFFER_H
-#include "glad.h"
+#include "../../../external/glad/include/glad/glad.h"
 #include "../../Engine/geometry/Vertex.h"
 #include "core/Globals.h"
+#include "../iBuffer.h"
 
 
-class GLBuffer {
+class GLBuffer : iBuffer {
 private:
-    GLuint m_bufferID;
     i32 m_countElements, m_countComponents;
 public:
     GLBuffer(GLfloat* vertices, int countComponents, int countElements);
     GLBuffer(const std::vector<Vertex> &vertices, i16 countComponents);
     ~GLBuffer();
 
-    void Bind() const;
-    void Unbind() const;
+    virtual void Bind();
+    virtual void Unbind();
     i32 GetCountComponents() const{return m_countComponents;}
     i32 GetCountElements() const{return m_countElements;}
 

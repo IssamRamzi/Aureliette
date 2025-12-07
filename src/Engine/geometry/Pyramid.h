@@ -14,9 +14,6 @@
 #include "Ogl/GLVertexArrayBuffer.h"
 
 
-
-
-
 class Pyramid {
 private:
     vec3_f m_position;

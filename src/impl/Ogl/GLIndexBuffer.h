@@ -6,17 +6,15 @@
 #define GLINDEXBUFFER_H
 #include <vector>
 
-#include "glad.h"
+#include "../../../external/glad/include/glad/glad.h"
 #include "core/Globals.h"
-
+#include "../iBuffer.h"
 
 class GLBuffer;
 
-class GLIndexBuffer {
+class GLIndexBuffer : iBuffer {
 private:
-    GLuint m_bufferID;
     i32 m_count;
-
 public:
 
     GLIndexBuffer(GLuint* data, i32 size, bool dynamic = false);
@@ -24,8 +22,8 @@ public:
 
     ~GLIndexBuffer();
 
-    void Bind() const;
-    void Unbind() const;
+    virtual void Bind();
+    virtual void Unbind();
     i32 GetCount() const {return m_count;}
 
 };

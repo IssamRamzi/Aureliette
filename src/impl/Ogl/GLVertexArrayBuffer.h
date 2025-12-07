@@ -4,24 +4,24 @@
 
 #ifndef GLVERTEXARRAYBUFFER_H
 #define GLVERTEXARRAYBUFFER_H
-#include "glad.h"
+#include "../../../external/glad/include/glad/glad.h"
 #include "GLBuffer.h"
+#include "../iBuffer.h"
 
 
 
-class GLVertexArrayBuffer {
+
+class GLVertexArrayBuffer : iBuffer {
 private:
-    GLuint m_vertexArrayID;
-
+    GLuint m_bufferID;
 public:
     GLVertexArrayBuffer();
     ~GLVertexArrayBuffer();
 
-    void Bind() const;
-    void Unbind() const;
+    virtual void Bind();
+    virtual void Unbind();
 
     void AddBuffer(GLBuffer &buffer, GLint index, GLint componentCount, GLint stride, void* offset);
-    // void SetIndexBuffer(IndexBuffer& buffer);
 
 };
 

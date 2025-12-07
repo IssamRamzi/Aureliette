@@ -11,7 +11,7 @@
 
 typedef struct {
     vec3_f position;
-    vec3_f color;
+    vec3_f normal; // changed from color to normal
     vec2_f texcoords;
 } Vertex;
 #endif //VERTEX_H

@@ -35,7 +35,7 @@ void Window::Init(){
 
     m_window = glfwCreateWindow(m_width, m_height, m_title.c_str(), NULL, NULL);
     if (m_window == NULL) {
-		// Logger::Log(WARNING, "Failed to create GLFW window\n");
+		logger.Log(WARNING, "Failed to create GLFW window\n");
 		glfwTerminate();
         return;
 	}
@@ -55,5 +55,7 @@ void Window::Init(){
 		logger.Log(WARNING, "Failed to initialize GLAD");
 		exit(EXIT_FAILURE);
 	}
+	glfwGetWindowPos(m_window, &position.x, &position.y);
 	logger.Log(DEBUG, "Window Creation succeeded !");
 }
+
