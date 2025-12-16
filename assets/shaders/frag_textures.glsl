@@ -5,8 +5,12 @@ in vec2 Texture;
 
 out vec4 FragColor;
 
-uniform sampler2D ourTexture;
+uniform sampler2D texture_diffuse1;
 
 void main(){
-     FragColor = texture(ourTexture, Texture) * vec4(Color, 1.0);
+     // Just output the diffuse texture
+     FragColor = texture(texture_diffuse1, Texture);
+
+     // Or test with texture coordinates as colors:
+     // FragColor = vec4(Texture.x, Texture.y, 0.0, 1.0);
 }

@@ -12,8 +12,14 @@ Model::Model(std::string path) {
 
 void Model::Draw(GLShader &shader) {
     shader.EnableShader();
+    for (auto texture : m_textures){
+        texture->Bind();
+    }
     for (size_t i = 0; i < m_meshes.size(); i++) {
         m_meshes[i].Draw(shader);
+    }
+    for (auto texture : m_textures){
+        texture->Unbind();
     }
     shader.DisableShader();
 }

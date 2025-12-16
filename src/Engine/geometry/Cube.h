@@ -71,13 +71,15 @@ public:
         if (mesh) {
             m_mesh = mesh;
         } else {
-            m_mesh = new Mesh{vertices, indices, {}}; // use members here
+            m_mesh = new Mesh{vertices, indices, {}}; 
         }
     }
 
 
     ~Cube() {
     }
+
+	
     void Draw(GLShader& shader, bool rotate = false) {
         mat4_f modelMatrix{1};
         if (rotate) {

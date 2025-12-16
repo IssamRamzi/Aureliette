@@ -4,7 +4,7 @@
 #pragma once
 #ifndef GLOBALS_H
 #define GLOBALS_H
-#include "InputManager.h"
+#include "../event/InputManager.h"
 #include "math/kMath.h"
 #include "core/Logger.h"
 

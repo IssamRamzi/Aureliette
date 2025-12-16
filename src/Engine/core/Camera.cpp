@@ -1,7 +1,7 @@
 #include "Camera.h"
 #include <iostream>
 
-#include "InputManager.h"
+#include "event/InputManager.h"
 
 Camera::Camera(Window* window, vec3 position){
     m_position = position;
@@ -28,7 +28,7 @@ mat4 Camera::CalculateMatrix(float nearPlane, float farPlane){
 
 void Camera::ProcessKeyboardInputs(){
     if (InputManager::IsKeyDown(LSHIFT)) {
-        m_speed = max_speed;
+        m_speed = m_initialSpeed * 3;
     }
     else {
         m_speed = m_initialSpeed;

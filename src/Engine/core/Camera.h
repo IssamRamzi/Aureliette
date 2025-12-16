@@ -28,6 +28,7 @@ public:
     float           GetSpeed() const {return m_speed;}
 
     void            SetFov(float fov) {m_fov = fov;}
+    void            SetSpeed(float speed){m_initialSpeed = speed;}
 
 private:
     Window          *m_window;
@@ -37,7 +38,7 @@ private:
     vec3            m_right = vec3(1.0f, 0.0f, 0.0f);
     vec2_f          last_mousePos;
 
-    float           m_initialSpeed = 0.005f, m_speed, max_speed = m_initialSpeed * 2, m_sensitivity = 0.1, m_fov = 45;
+    float           m_initialSpeed = 0.005f, m_speed, m_sensitivity = 0.1, m_fov = 45;
     bool            firstMouse = true;
 
     // yaw pour rota autour de l'axe des ordonnées (hor)

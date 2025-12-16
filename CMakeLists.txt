@@ -25,10 +25,12 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES}
 		src/Engine/core/Globals.h
 		src/impl/Ogl/GLIndexBuffer.cpp
 		src/impl/Ogl/GLIndexBuffer.h
+		src/impl/Ogl/GLTexture.h
+		src/impl/Ogl/GLTexture.cpp
 		src/impl/iBuffer.h
 		src/Engine/core/Window.cpp
-		src/Engine/core/InputManager.cpp
-		src/Engine/core/InputManager.h
+		src/Engine/event/InputManager.cpp
+		src/Engine/event/Time.cpp
 		src/Engine/geometry/Triangle.h
 		src/Engine/geometry/Mesh.cpp
 		src/Engine/geometry/Mesh.h
@@ -36,11 +38,12 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES}
 		src/Engine/core/Camera.h
 		src/programs/DoubleTriangle.cpp
 		src/Engine/geometry/Pyramid.h
-		src/Engine/core/ObjectLoader.cpp
-		src/Engine/core/ObjectLoader.h
 		src/Engine/geometry/Model.cpp
 		src/Engine/geometry/Model.h
 		src/programs/cubesrotating.cpp
+		src/Engine/ui/Imgui_utils.cpp
+		src/Engine/ui/Imgui_utils.h
+
 )
 
 # Find OpenGL
@@ -49,8 +52,8 @@ find_package(OpenGL REQUIRED)
 # External library roots
 set(GLFW_ROOT_DIR external/glfw)
 set(GLAD_ROOT_DIR external/glad)
-set(GLM_ROOT_DIR external/glm-1.0.1)
-set(STB_ROOT_DIR external/stbi_image)
+set(GLM_ROOT_DIR external/glm)
+set(STB_ROOT_DIR external/stb_image)
 set(IMGUI_ROOT_DIR external/imgui)
 
 

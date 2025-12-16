@@ -31,6 +31,11 @@ public:
     inline GLFWwindow* GetWindowAdress(){return m_window;}
     inline Vec2<int> GetWindowDimensions(){return Vec2<int>{m_width, m_height};}
     inline void SetWindowDimensions(int width, int height){m_width = width, m_height = height;}
+    inline std::string GetWindowTitle(){return m_title;}
+    inline void SetTitle(std::string title){
+        glfwSetWindowTitle(m_window, title.c_str());
+    }
+
 
 
 };
